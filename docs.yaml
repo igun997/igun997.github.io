@@ -1,0 +1,333 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: MauKirim Public API
+  contact: {}
+host: api.maukirim.com
+basePath: /v1/messages
+securityDefinitions: {}
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /send:
+    post:
+      summary: Send Text
+      tags:
+      - Messages
+      operationId: SendText
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/SendTextRequest'
+      responses:
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/400-InvalidToken1'
+          examples:
+            application/json:
+              message:
+              - unauthorized
+              code: 400
+              data: null
+          headers: {}
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/200-OK'
+          examples:
+            application/json:
+              code: 200
+              messages:
+              - message_sent
+              data: null
+              process_id: d240ddf1-59aa-4a11-8ee7-24698d496649
+          headers: {}
+      security: []
+  /send/image:
+    post:
+      summary: Send Image
+      tags:
+      - Messages
+      operationId: SendImage
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: msdn
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: message
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: file
+        in: formData
+        required: true
+        type: string
+        description: ''
+      responses:
+        '422':
+          description: Unprocessable Entity (WebDAV) (RFC 4918)
+          schema:
+            $ref: '#/definitions/422-InvalidRequests1'
+          examples:
+            application/json:
+              message: validation.required
+              errors:
+                file:
+                - validation.required
+          headers: {}
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/200-OK'
+          examples:
+            application/json:
+              code: 200
+              messages:
+              - message_sent
+              data: null
+              process_id: fc78a127-e51c-46bb-aa05-28e2f362580d
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/400-BadRequests1'
+          examples:
+            application/json:
+              code: 200
+              messages:
+              - message_not_sent
+              data: null
+              process_id: fc78a127-e51c-46bb-aa05-28e2f362580d
+          headers: {}
+      security: []
+  /send/document:
+    post:
+      summary: Send Documents
+      tags:
+      - Messages
+      operationId: SendDocuments
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: msdn
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: message
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: file
+        in: formData
+        required: true
+        type: string
+        description: ''
+      responses:
+        '422':
+          description: Unprocessable Entity (WebDAV) (RFC 4918)
+          schema:
+            $ref: '#/definitions/422-InvalidRequests1'
+          examples:
+            application/json:
+              message: validation.required
+              errors:
+                file:
+                - validation.required
+          headers: {}
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/200-OK'
+          examples:
+            application/json:
+              code: 200
+              messages:
+              - message_sent
+              data: null
+              process_id: fc78a127-e51c-46bb-aa05-28e2f362580d
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/400-BadRequests1'
+          examples:
+            application/json:
+              code: 200
+              messages:
+              - message_not_sent
+              data: null
+              process_id: fc78a127-e51c-46bb-aa05-28e2f362580d
+          headers: {}
+      security: []
+definitions:
+  SendTextRequest:
+    title: SendText
+    example:
+      msdn: your_phone_with_code_area
+      message: your_message
+      list_button:
+      - id: 1
+        text: your_button_name
+        url: your_button_link
+    type: object
+    properties:
+      msdn:
+        type: string
+      message:
+        type: string
+      list_button:
+        type: array
+        items:
+          $ref: '#/definitions/ListButton'
+    required:
+    - msdn
+    - message
+    - list_button
+  ListButton:
+    title: ListButton
+    example:
+      id: 1
+      text: your_button_name
+      url: your_button_link
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      text:
+        type: string
+      url:
+        type: string
+    required:
+    - id
+    - text
+    - url
+  400-InvalidToken1:
+    title: 400 - Invalid Token
+    example:
+      message:
+      - unauthorized
+      code: 400
+      data: null
+    type: object
+    properties:
+      message:
+        type: array
+        items:
+          type: string
+      code:
+        type: integer
+        format: int32
+      data:
+        type: string
+    required:
+    - message
+    - code
+    - data
+  400-BadRequests1:
+    title: 400 - Bad Request
+    example:
+      code: 400
+      messages:
+      - message_not_sent
+      data: null
+      process_id: 6afe0e9f-10a2-40d6-8981-98e92ed4d832
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      messages:
+        type: array
+        items:
+          type: string
+      data:
+        type: string
+      process_id:
+        type: string
+    required:
+    - code
+    - messages
+    - data
+    - process_id
+  200-OK:
+    title: 200 - OK
+    example:
+      code: 200
+      messages:
+      - message_sent
+      data: null
+      process_id: d240ddf1-59aa-4a11-8ee7-24698d496649
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      messages:
+        type: array
+        items:
+          type: string
+      data:
+        type: string
+      process_id:
+        type: string
+    required:
+    - code
+    - messages
+    - data
+    - process_id
+  Errors:
+    title: Entities File Error
+    example:
+      file:
+      - validation.required
+    type: object
+    properties:
+      file:
+        type: array
+        items:
+          type: string
+    required:
+    - file
+  422-InvalidRequests1:
+    title: 422 - InvalidRequests
+    example:
+      message: validation.required
+      errors:
+        file:
+        - validation.required
+    type: object
+    properties:
+      message:
+        type: string
+      errors:
+        $ref: '#/definitions/Errors'
+    required:
+    - message
+    - errors
+security: []
+tags:
+- name: Messages
