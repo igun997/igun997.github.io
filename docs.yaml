@@ -2,10 +2,18 @@ swagger: '2.0'
 info:
   version: '1.0'
   title: MauKirim Public API
-  contact: {}
+  description: 'This documentation for Connecting your APP with Our Services, make sure you have registered on maukirim.com'
+  contact:
+    name: MauKirim Support
+    email: info@maukirim.com
 host: api.maukirim.com
 basePath: /v1/messages
-securityDefinitions: {}
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: 'Your Devices Key on Perangkat -> Device Detail -> Copy Paste your key'
 schemes:
 - http
 consumes:
