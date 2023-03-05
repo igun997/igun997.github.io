@@ -87,7 +87,7 @@ paths:
       - name: file
         in: formData
         required: true
-        type: string
+        type: file
         description: ''
       responses:
         '422':
@@ -151,7 +151,7 @@ paths:
       - name: file
         in: formData
         required: true
-        type: string
+        type: file
         description: ''
       responses:
         '422':
