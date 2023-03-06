@@ -7,8 +7,6 @@ info:
     name: MauKirim Support
     email: info@maukirim.com
 host: api.maukirim.com
-schemes:
-  - https
 basePath: /v1/messages
 securityDefinitions:
   Bearer:
@@ -17,7 +15,7 @@ securityDefinitions:
     in: header
     description: 'Your Devices Key on Perangkat -> Device Detail -> Copy Paste your key'
 schemes:
-- http
+- https
 consumes:
 - application/json
 produces:
