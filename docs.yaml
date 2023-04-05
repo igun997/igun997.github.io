@@ -190,6 +190,82 @@ paths:
               process_id: fc78a127-e51c-46bb-aa05-28e2f362580d
           headers: {}
       security: []
+  /otp/send:
+    post:
+      summary: Send OTP Requests
+      tags:
+      - OTP
+      operationId: SendOTP
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/SendOTPRequest'
+          
+      responses:
+        '400':
+          description: Bad Request
+          examples:
+            application/json:
+              message:
+              - otp_already_sent
+              code: 400
+              data: null
+          headers: {}
+        '200':
+          description: OK
+          examples:
+            application/json:
+              code: 200
+              messages:
+              - otp_sent
+              data: null
+              process_id: d240ddf1-59aa-4a11-8ee7-24698d496649
+          headers: {}
+      security: []
+  /otp/validate:
+    post:
+      summary: Validate OTP Request
+      tags:
+      - OTP
+      operationId: ValidateOTP
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/ValidateOTPRequest'
+          
+      responses:
+        '400':
+          description: Bad Request
+          examples:
+            application/json:
+              message:
+              - otp_already_sent
+              code: 400
+              data: null
+          headers: {}
+        '200':
+          description: OK
+          examples:
+            application/json:
+              code: 200
+              messages:
+              - otp_sent
+              data: null
+              process_id: d240ddf1-59aa-4a11-8ee7-24698d496649
+          headers: {}
+      security: []
 definitions:
   SendTextRequest:
     title: SendText
@@ -214,6 +290,27 @@ definitions:
     - msdn
     - message
     - list_button
+  SendOTPRequest:
+    title: SendOTP
+    example:
+      msdn: your_phone_with_code_area
+    type: object
+    properties:
+      msdn:
+        type: string
+    required:
+    - msdn
+  ValidateOTPRequest:
+    title: SendOTP
+    example:
+      msdn: your_phone_with_code_area
+      otp: your_otp
+    type: object
+    properties:
+      msdn:
+        type: string
+    required:
+    - msdn
   ListButton:
     title: ListButton
     example:
@@ -339,3 +436,4 @@ definitions:
 security: []
 tags:
 - name: Messages
+- name: OTP
