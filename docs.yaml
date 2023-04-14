@@ -7,7 +7,7 @@ info:
     name: MauKirim Support
     email: info@maukirim.com
 host: api.maukirim.com
-basePath: /v1/messages
+basePath: /api/v1/messages
 securityDefinitions:
   Bearer:
     type: apiKey
